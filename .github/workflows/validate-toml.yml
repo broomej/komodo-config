@@ -1,0 +1,44 @@
+name: Validate TOML
+
+# Parses every .toml file in the repo on every PR to main.
+# Komodo itself will also reject bad TOML, but this gives a faster
+# feedback loop with line-precise errors right in the PR check.
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  validate-toml:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install tomllib-based validator
+        run: pip install --no-input tomli
+
+      - name: Find and validate all TOML files
+        shell: bash
+        run: |
+          set -e
+          fail=0
+          while IFS= read -r f; do
+            echo "==> $f"
+            python -c "
+              import sys, tomli
+              try:
+                  with open('$f','rb') as fh: tomli.load(fh)
+                  print('  OK')
+              except tomli.TOMLDecodeError as e:
+                  print(f'  FAIL: {e}')
+                  sys.exit(1)
+            " || fail=1
+          done < <(find . -type f -name '*.toml' -not -path './.git/*')
+          exit $fail

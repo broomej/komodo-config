@@ -1,0 +1,41 @@
+# Dev jellyfin stack.
+#
+# Same source repo as prod (broomej/servarr) but on the `dev` branch, and
+# applies compose.dev.yaml on top of compose.yaml as a Docker Compose override.
+# The override file changes container_name, port, volumes (separate paths +
+# read-only media), and keeps GPU passthrough for testing NVIDIA runtime
+# changes before they hit prod.
+#
+# IMPORTANT: prod and dev share the same physical GPU. Running both stacks
+# simultaneously means two containers each reserving the GPU. If GPU memory
+# is tight (e.g. < 4 GB VRAM free), stop the prod stack first:
+#   docker compose -p jellyfin down
+#   ...test in dev...
+#   docker compose -p jellyfin up -d
+
+[[stack]]
+name = "jellyfin-dev"
+description = "Jellyfin media server (dev — test breaking changes here before promoting to prod)"
+deploy = true
+tags = ["dev", "servarr", "media"]
+[stack.config]
+# Reuse the same Komodo Periphery server as prod (single-host setup).
+server = "servarr-host"   # <-- REPLACE with your Komodo server name
+git_provider = "github.com"
+git_https    = true
+git_account  = ""
+repo         = "broomej/servarr"
+branch       = "dev"
+# Override semantics: later files win. compose.dev.yaml overrides container_name,
+# ports, and volumes from compose.yaml.
+file_paths = ["compose.yaml", "compose.dev.yaml"]
+env_file_path = ".env"
+auto_pull = true
+poll_for_updates = false
+send_alerts = false   # don't spam alerts for dev
+environment = """
+TAILNET_IP = [[TAILNET_IP]]
+TZ = [[TZ]]
+DOCKER_VOLUMES = [[DOCKER_VOLUMES]]
+SERVARR_DATA = [[SERVARR_DATA]]
+"""

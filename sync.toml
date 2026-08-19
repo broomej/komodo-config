@@ -1,0 +1,19 @@
+# Top-level Resource Sync declaration.
+#
+# This tells Komodo: "the repo broomej/komodo-config on branch main,
+# at path ., contains TOML files describing resources you should manage."
+
+[[resource_sync]]
+name = "komodo-config"
+description = "Centralized Komodo Resource Sync for daggoth stacks"
+[resource_sync.config]
+git_provider  = "github.com"
+git_https    = true
+repo         = "broomej/komodo-config"
+branch       = "main"
+git_account  = "broomej"
+resource_path = ["."]
+# Auto-sync on push to main of this repo.
+webhook_enabled = true
+# Optional: pin to a specific commit. Leave empty to track branch tip.
+commit = ""

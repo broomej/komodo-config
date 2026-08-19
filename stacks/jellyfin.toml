@@ -1,0 +1,45 @@
+# Prod jellyfin stack.
+#
+# Pulls compose.yaml from broomej/servarr @ main and runs it as the
+# `jellyfin` docker-compose project. Env vars below are written to a
+# `.env` file alongside the compose file at deploy time.
+#
+# Schema: https://docs.rs/komodo_client/latest/komodo_client/entities/stack/struct.StackConfig.html
+
+[[stack]]
+name = "jellyfin"
+description = "Jellyfin media server (prod)"
+deploy = true       # Komodo will deploy this stack if it isn't running / has config updates
+tags = ["prod", "servarr", "media"]
+[stack.config]
+# 'server' must match the name of the Komodo Periphery server this host runs
+# under. Look it up under Komodo UI → Servers. If you haven't registered
+# one yet, do that first (Komodo UI → Resources → Servers → New).
+server = "servarr-host"   # <-- REPLACE with your Komodo server name
+# Repository holding the compose file.
+git_provider = "github.com"
+git_https    = true
+# Leave empty if servarr is public. Set to your GitHub username if private.
+git_account  = ""
+repo         = "broomej/servarr"
+branch       = "main"
+# Compose files to apply (later files override earlier ones).
+# For prod we use just compose.yaml.
+file_paths = ["compose.yaml"]
+# Komodo writes this env file to the run directory before `docker compose up -d`.
+# Default is `.env` which is what the servarr compose.yaml expects.
+env_file_path = ".env"
+# Pull images before redeploy to ensure latest tags.
+auto_pull = true
+# Re-poll the registry for image updates periodically (every ~5m by default).
+poll_for_updates = false
+# Send Komodo alerts on stack state changes.
+send_alerts = true
+# Environment variables written into .env for this stack.
+# [[VAR]] interpolation pulls from variables.toml (Komodo Variables).
+environment = """
+TAILNET_IP = [[TAILNET_IP]]
+TZ = [[TZ]]
+DOCKER_VOLUMES = [[DOCKER_VOLUMES]]
+SERVARR_DATA = [[SERVARR_DATA]]
+"""
