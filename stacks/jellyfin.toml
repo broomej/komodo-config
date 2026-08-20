@@ -7,7 +7,7 @@
 # Schema: https://docs.rs/komodo_client/latest/komodo_client/entities/stack/struct.StackConfig.html
 
 [[stack]]
-name = "jellyfin"
+name = "servarr"
 description = "Jellyfin media server (prod)"
 deploy = true       # Komodo will deploy this stack if it isn't running / has config updates
 tags = ["prod", "servarr", "media"]

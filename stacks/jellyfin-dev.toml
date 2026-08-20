@@ -14,7 +14,7 @@
 #   docker compose -p jellyfin up -d
 
 [[stack]]
-name = "jellyfin-dev"
+name = "servarr-dev"
 description = "Jellyfin media server (dev — test breaking changes here before promoting to prod)"
 deploy = true
 tags = ["dev", "servarr", "media"]
