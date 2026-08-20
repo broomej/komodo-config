@@ -9,9 +9,8 @@ description = "Centralized Komodo Resource Sync for daggoth stacks"
 [resource_sync.config]
 git_provider  = "github.com"
 git_https    = true
-repo         = "broomej/komodo-config"
+linked_repo = "komodo-config"
 branch       = "main"
-git_account  = "broomej"
 resource_path = ["."]
 # Auto-sync on push to main of this repo.
 webhook_enabled = true
