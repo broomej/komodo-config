@@ -20,7 +20,7 @@ deploy = true
 tags = ["dev", "servarr", "media"]
 [stack.config]
 # Reuse the same Komodo Periphery server as prod (single-host setup).
-server = "servarr-host"   # <-- REPLACE with your Komodo server name
+server = "daggoth"
 git_provider = "github.com"
 git_https    = true
 git_account  = ""
