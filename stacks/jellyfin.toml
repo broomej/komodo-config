@@ -15,7 +15,7 @@ tags = ["prod", "servarr", "media"]
 # 'server' must match the name of the Komodo Periphery server this host runs
 # under. Look it up under Komodo UI → Servers. If you haven't registered
 # one yet, do that first (Komodo UI → Resources → Servers → New).
-server = "servarr-host"   # <-- REPLACE with your Komodo server name
+server = "daggoth"
 # Repository holding the compose file.
 git_provider = "github.com"
 git_https    = true
@@ -45,5 +45,5 @@ environment = """
 TAILNET_IP = [[TAILNET_IP]]
 TZ = [[TZ]]
 DOCKER_VOLUMES = [[DOCKER_VOLUMES]]
-SERVARR_DATA = [[SERVARR_DATA]]
+SERVARR_DATA = [[ZFS_POOL]]/servarr
 """
