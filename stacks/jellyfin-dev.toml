@@ -20,12 +20,12 @@ deploy = true
 tags = ["dev", "servarr", "media"]
 [stack.config]
 # Reuse the same Komodo Periphery server as prod (single-host setup).
-server = "servarr-host"   # <-- REPLACE with your Komodo server name
+server = "daggoth"
 git_provider = "github.com"
 git_https    = true
 git_account  = ""
 repo         = "broomej/servarr"
-branch       = "dev"
+branch       = "devel"
 # Override semantics: later files win. compose.dev.yaml overrides container_name,
 # ports, and volumes from compose.yaml.
 file_paths = ["compose.yaml", "compose.dev.yaml"]
@@ -41,5 +41,5 @@ environment = """
 TAILNET_IP = [[TAILNET_IP]]
 TZ = [[TZ]]
 DOCKER_VOLUMES = [[DOCKER_VOLUMES]]
-SERVARR_DATA = [[SERVARR_DATA]]
+SERVARR_DATA = [[ZFS_POOL]]/servarr
 """
