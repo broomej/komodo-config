@@ -15,7 +15,7 @@ tags = ["prod", "servarr", "media"]
 # 'server' must match the name of the Komodo Periphery server this host runs
 # under. Look it up under Komodo UI → Servers. If you haven't registered
 # one yet, do that first (Komodo UI → Resources → Servers → New).
-server = "daggoth"
+server = "servarr-host"   # <-- REPLACE with your Komodo server name
 # Repository holding the compose file.
 git_provider = "github.com"
 git_https    = true
@@ -35,6 +35,10 @@ auto_pull = true
 poll_for_updates = false
 # Send Komodo alerts on stack state changes.
 send_alerts = true
+# Explicit: enable the webhook listener for this stack. The Komodo source
+# says the default is `true`, but explicitly setting it avoids any ambiguity
+# when the stack is created via Resource Sync.
+webhook_enabled = true
 # Environment variables written into .env for this stack.
 # [[VAR]] interpolation pulls from variables.toml (Komodo Variables).
 environment = """

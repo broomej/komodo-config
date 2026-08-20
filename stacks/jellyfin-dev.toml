@@ -20,7 +20,7 @@ deploy = true
 tags = ["dev", "servarr", "media"]
 [stack.config]
 # Reuse the same Komodo Periphery server as prod (single-host setup).
-server = "daggoth"
+server = "servarr-host"   # <-- REPLACE with your Komodo server name
 git_provider = "github.com"
 git_https    = true
 git_account  = ""
@@ -33,6 +33,10 @@ env_file_path = ".env"
 auto_pull = true
 poll_for_updates = false
 send_alerts = false   # don't spam alerts for dev
+# Explicit: enable the webhook listener for this stack. The Komodo source
+# says the default is `true`, but explicitly setting it avoids any ambiguity
+# when the stack is created via Resource Sync.
+webhook_enabled = true
 environment = """
 TAILNET_IP = [[TAILNET_IP]]
 TZ = [[TZ]]
