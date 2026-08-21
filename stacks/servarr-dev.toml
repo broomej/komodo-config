@@ -27,7 +27,7 @@ git_account  = ""
 repo         = "broomej/servarr"
 branch       = "devel"
 # does *not* read in compose.yaml then overrides with the dev version. compose.dev.yaml is standalone
-file_paths = ["compose.dev.yaml"]
+file_paths = ["compose.yaml"]
 env_file_path = ".env"
 auto_pull = true
 poll_for_updates = false
