@@ -35,10 +35,8 @@ auto_pull = true
 poll_for_updates = false
 # Send Komodo alerts on stack state changes.
 send_alerts = true
-# Explicit: enable the webhook listener for this stack. The Komodo source
-# says the default is `true`, but explicitly setting it avoids any ambiguity
-# when the stack is created via Resource Sync.
-webhook_enabled = true
+# disable for prod, it's causing causing collisions with dev and re-building too frequently
+webhook_enabled = false
 # Environment variables written into .env for this stack.
 # [[VAR]] interpolation pulls from variables.toml (Komodo Variables).
 environment = """
